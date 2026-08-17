@@ -66,10 +66,16 @@ jobs:
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang/bin:$PATH
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/gcc-64/bin:$PATH
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/gcc-32/bin:$PATH
+        # 配置
+        make O=out ARCH=arm64 CC=clang \
+          CROSS_COMPILE=aarch64-linux-android- \
+          CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+          ${{ env.DEFCONFIG_NAME }}
+        # 编译
         make -j$(nproc) O=out ARCH=arm64 CC=clang \
           CROSS_COMPILE=aarch64-linux-android- \
           CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-          ${{ env.DEFCONFIG_NAME }} 2>&1 | tee build.log
+          2>&1 | tee build.log
         echo "=== Build log ==="
         cat build.log
         if [ ! -f out/arch/arm64/boot/Image.gz-dtb ]; then
