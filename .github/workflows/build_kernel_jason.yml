@@ -44,8 +44,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir -p clang
-        wget -O clang.tar.gz https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r383902b.tar.gz
-        tar -C clang/ -zxvf clang.tar.gz
+        git clone https://github.com/kdrag0n/proton-clang.git -b master clang --depth=1
 
     - name: Download GCC 64-bit
       run: |
